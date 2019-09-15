@@ -18,7 +18,7 @@ class Car {
     }
 
     changeColor (color) {
-        if (this.color == color) {
+        if (this.color === color) {
             alert('Your car already has the same color');
         } else {
             this.color = color;

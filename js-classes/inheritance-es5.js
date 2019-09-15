@@ -1,9 +1,9 @@
 function Car (name, model, year, color, maxSpeed, fuelCapacity, fuelConsumption) {
-    if (fuelCapacity == undefined) {
+    if (fuelCapacity === undefined) {
         fuelCapacity = 60;
     }
 
-    if (fuelConsumption == undefined) {
+    if (fuelConsumption === undefined) {
         fuelConsumption = 10;
     }
 
@@ -25,7 +25,7 @@ Car.prototype.getAge = function () {
 }
 
 Car.prototype.changeColor = function (color) {
-    if (this.color == color) {
+    if (this.color === color) {
         alert('Your car already has the same color');
     } else {
         this.color = color;
@@ -41,8 +41,8 @@ Car.prototype.calculateWay = function (kilometers, fuel) {
     let time = Math.round(kilometers / this.maxSpeed);
     alert('Your road will take ' + time + ' hours')
 
-    let neededFuel = Math.round((kilometers * this.fuelConsumption / 100), 1)
-    console.log(neededFuel);
+    let neededFuel = Math.round((kilometers * this.fuelConsumption / 100), 1);
+    
     if (fuel < neededFuel) {
         let neededRefuel = Math.ceil((neededFuel - fuel) / this.fuelCapacity);
         alert('You  need to refuel on your road ' + neededRefuel + ' times')
