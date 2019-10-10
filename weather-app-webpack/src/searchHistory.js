@@ -1,4 +1,5 @@
-let { fillTable } = require('./historyTable');
+import { fillTable } from './historyTable';
+
 let myHistoryData = [];
 (function init () {
     if (localStorage.getItem('myHistoryData')) {
@@ -10,28 +11,28 @@ let myHistoryData = [];
 function clearMyHistory () {
     localStorage.removeItem('myHistoryData');
     myHistoryData = [];
-    console.log(myHistoryData);
     fillTable(myHistoryData);
 }
 
 function addMyHistory (newItem) {
-    checkUniqueKey(myHistoryData, newItem);
     localStorage.setItem('myHistoryData', JSON.stringify(myHistoryData));
-    console.log(myHistoryData)
-    fillTable(myHistoryData);
+    myHistoryData = checkUniqueKey(myHistoryData, newItem);
 }
+
+const getCurrentHistoryData = () => myHistoryData;
 
 function checkUniqueKey (arr, newItem) {
     let needToPush = true;
-    arr.forEach((item, i) => {
+    const newArr = arr.map((item) => {
         if (item.name === newItem.name) {
-        arr.splice(i, 1, newItem);
-        needToPush = false;
-        }
+            needToPush = false;
+            return newItem;
+        } else return item;
     });
     if (needToPush) {
-        arr.push(newItem);
+        newArr.push(newItem);
     }
+    return newArr
 };
 
-module.exports = { addMyHistory, myHistoryData, clearMyHistory };
+export { addMyHistory, getCurrentHistoryData, clearMyHistory };

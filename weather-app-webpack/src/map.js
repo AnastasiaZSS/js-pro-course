@@ -9,12 +9,10 @@ const map = L.map('map', {
 });
 L.control.scale().addTo(map);
 
-function setLocation (lat, lon, message) {
+export default function setLocation (lat, lon, message) {
     if (marker) {
         marker.remove();
     }
     map.setView([lat, lon], 7);
     marker = L.marker([lat, lon]).addTo(map).bindPopup(message).openPopup();
 }
-
-module.exports = setLocation;

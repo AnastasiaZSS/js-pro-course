@@ -22,7 +22,8 @@ module.exports = {
     new HtmlWebpackPlugin({
       filename: "index.html",
       template: 'src/index.html.ejs',
-      inject: 'body'
+      inject: 'body',
+      title: 'Weather App'
   })
 ]
 };

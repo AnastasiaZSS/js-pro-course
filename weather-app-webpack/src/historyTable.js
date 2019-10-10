@@ -2,7 +2,7 @@ const searchHistoryTable = document.createElement('table');
 const searchHistoryTableBody = document.createElement('tbody');
 searchHistoryTable.classList.add('search-history-table');
 searchHistoryTable.innerHTML = '<thead><tr><th>City</th><th>Country</th><th>t, &degC</th><th>wind speed, m/s</th><th>description</th></tr></thead>';
-searchHistoryTable.appendChild(searchHistoryTableBody);
+searchHistoryTable.append(searchHistoryTableBody);
 
 function fillTable (data) {
   searchHistoryTableBody.innerHTML = '';
@@ -12,4 +12,4 @@ function fillTable (data) {
   })
 }
 
-  module.exports = { fillTable, searchHistoryTable };
+export { searchHistoryTable, fillTable };

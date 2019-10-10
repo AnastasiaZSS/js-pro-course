@@ -1,4 +1,7 @@
-const getWeather = require('./getWeatherFunc');
+import  { fillTable } from './historyTable';
+import  { addMyHistory, getCurrentHistoryData } from './searchHistory';
+import getWeather from './getWeatherFunc';
+import setLocation from './map'
 
 const form = document.createElement('form');
 
@@ -18,10 +21,10 @@ span.textContent = 'Type a city';
 const errorMessage = document.createElement('div');
 errorMessage.classList.add('error-message');
 
-form.appendChild(span);
-form.appendChild(input);
-form.appendChild(submitBtn);
-form.appendChild(errorMessage);
+form.append(span);
+form.append(input);
+form.append(submitBtn);
+form.append(errorMessage);
 
 input.addEventListener('input', function () {
     if (this.classList.contains('red')) {
@@ -33,17 +36,37 @@ input.addEventListener('input', function () {
 form.addEventListener('submit', async function(e) {
     
     e.preventDefault();
-
+  
     let cityName = input.value;
-
-    if (!cityName) {
-        input.classList.add('red');
-        errorMessage.innerHTML = 'type a city';
-        return;
+  
+    if (cityName) {
+      try {
+        const {
+          current:
+              { 
+                weather_icons,
+                weather_descriptions, 
+                temperature, wind_speed
+              },
+              location: { 
+                country, 
+                name,
+                lon, 
+                lat }
+              } =  await getWeather(cityName);
+              console.log(name);
+        addMyHistory ({ country, name, temperature, wind_speed, description: weather_descriptions[0]})
+        setLocation (lat, lon, `${name}: ${temperature}&deg<img src="${weather_icons[0]}">`); 
+        const currentHistory = getCurrentHistoryData();
+        fillTable(currentHistory)
+      } catch {
+        errorMessage.innerHTML = 'incorrect city name';
+      }
+    } else {
+      input.classList.add('red');
+      errorMessage.innerHTML = 'type a city';
     }
+  });
+  
 
-    getWeather(cityName);
-
-});
-
-module.exports = { form, errorMessage }
+export default form;
