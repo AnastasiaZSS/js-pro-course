@@ -2,10 +2,16 @@ import React from 'react';
 
 import style from './style.module.css'
 
-export default function EmojiSearch (props) {
+function EmojiSearch ({ onChange, value }) {
     return (
         <form className={style.form}>
-            <input onChange={props.onChange} value={props.value} type="text"></input>
+            <input 
+                onChange={onChange} 
+                type="text"
+                value={value}
+            />
         </form>
     )
 }
+
+export default React.memo(EmojiSearch)
